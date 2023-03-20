@@ -3,7 +3,6 @@ ARG LICENSE="MIT"
 ARG IMAGE_NAME="ubuntu"
 ARG LANGUAGE="en_US.UTF-8"
 ARG TIMEZONE="America/New_York"
-ARG EXPOSE_PORTS=""
 
 ARG IMAGE_REPO="ubuntu"
 ARG IMAGE_VERSION="bionic"
@@ -30,6 +29,7 @@ ENV LANG="${LANGUAGE}"
 ENV TERM="xterm-256color"
 ENV HOSTNAME="ubuntu"
 ENV container="docker"
+ENV DEBIAN_FRONTEND="noninteractive"
 
 USER ${USER}
 WORKDIR /root
@@ -41,7 +41,10 @@ RUN set -ex ; \
   echo ""
 
 RUN set -ex ; \
-  echo ${PACK_LIST}
+  echo "$LANG UTF-8" >"/etc/locale.gen" && apt-get update && apt-get install -yy locales ; \
+  dpkg-reconfigure --frontend=noninteractive locales ; update-locale LANG=$LANG ; \
+  echo 'export DEBIAN_FRONTEND="'${DEBIAN_FRONTEND}'"' >"/etc/profile.d/apt.sh" && chmod 755 "/etc/profile.d/apt.sh" && \
+  apt install -yy ${PACK_LIST}
 
 RUN set -ex ; \
   touch "/etc/profile" "/root/.profile" ; \
@@ -76,7 +79,6 @@ ARG LICENSE
 ARG LANGUAGE
 ARG TIMEZONE
 ARG IMAGE_NAME
-ARG EXPOSE_PORTS
 
 USER ${USER}
 WORKDIR /root
@@ -107,7 +109,7 @@ ENV container="docker"
 ENV LANG="${LANGUAGE}"
 ENV TERM="xterm-256color"
 ENV CONTAINER_NAME="${IMAGE_NAME}"
-ENV HOSTNAME="casjaysdev-${IMAGE_NAME}"
+ENV HOSTNAME="${IMAGE_NAME}"
 ENV USER="${USER}"
 
 COPY --from=build /. /
