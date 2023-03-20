@@ -42,16 +42,16 @@ RUN set -ex ; \
 
 RUN set -ex ; \
   echo "$LANG UTF-8" >"/etc/locale.gen" && apt-get update && apt-get install -yy locales ; \
-  dpkg-reconfigure --frontend=noninteractive locales ; update-locale LANG=$LANG ; \
-  echo 'export DEBIAN_FRONTEND="'${DEBIAN_FRONTEND}'"' >"/etc/profile.d/apt.sh" && chmod 755 "/etc/profile.d/apt.sh" && \
-  apt install -yy ${PACK_LIST}
+  dpkg-reconfigure --frontend=noninteractive locales ; update-locale LANG=${LANG} ; \
+  echo 'export DEBIAN_FRONTEND="'${DEBIAN_FRONTEND}'"' >"/etc/profile.d/apt.sh" && chmod 755 "/etc/profile.d/apt.sh" ; \
+  apt update -yy && apt install -yy ${PACK_LIST}
 
 RUN set -ex ; \
   touch "/etc/profile" "/root/.profile" ; \
   { [ -f "/etc/bash/bashrc" ] && cp -Rf "/etc/bash/bashrc" "/root/.bashrc" ; } || { [ -f "/etc/bashrc" ] && cp -Rf "/etc/bashrc" "/root/.bashrc" ; } || { [ -f "/etc/bash.bashrc" ] && cp -Rf "/etc/bash.bashrc" "/root/.bashrc" ; }; \
-  sed -i 's|root:x:.*|root:x:0:0:root:/root:/bin/bash|g' "/etc/passwd" ; \
   grep -s -q 'alias quit' "/root/.bashrc" || printf '# Profile\n\n%s\n%s\n%s\n%s\n' '. /etc/profile' '. /root/.profile' "alias q='exit'" "alias quit='exit'" >>"/root/.bashrc" ; \
-  BASH_CMD="$(type -P bash)" ; [ -f "$BASH_CMD" ] && { [ -f "/bin/sh" ] && rm -rf "/bin/sh" || true; } && ln -sf "$BASH_CMD" "/bin/sh"
+  sed -i 's|root:x:.*|root:x:0:0:root:/root:/bin/bash|g' "/etc/passwd" ; \
+  update-alternatives --install /bin/sh sh /bin/bash 1
 
 RUN set -ex ; \
   echo
