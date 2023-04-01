@@ -118,5 +118,5 @@ VOLUME [ "/config","/data" ]
 
 EXPOSE ${ENV_PORTS}
 
-CMD [ "bin/bash" ]
+CMD [ "/bin/bash" ]
 HEALTHCHECK --start-period=1m --interval=2m --timeout=3s CMD [ "true" ]
