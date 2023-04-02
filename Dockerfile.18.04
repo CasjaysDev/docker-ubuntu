@@ -49,7 +49,7 @@ RUN set -ex ; \
 RUN set -ex ; \
   touch "/etc/profile" "/root/.profile" ; \
   { [ -f "/etc/bash/bashrc" ] && cp -Rf "/etc/bash/bashrc" "/root/.bashrc" ; } || { [ -f "/etc/bashrc" ] && cp -Rf "/etc/bashrc" "/root/.bashrc" ; } || { [ -f "/etc/bash.bashrc" ] && cp -Rf "/etc/bash.bashrc" "/root/.bashrc" ; }; \
-  grep -s -q 'alias quit' "/root/.bashrc" || printf '# Profile\n\n%s\n%s\n%s\n%s\n' '. /etc/profile' '. /root/.profile' "alias q='exit'" "alias quit='exit'" >>"/root/.bashrc" ; \
+  grep -s -q 'alias quit' "/root/.bashrc" || printf '# Profile\n\n%s\n%s\n' "alias q='exit'" "alias quit='exit'" >>"/root/.bashrc" ; \
   sed -i 's|root:x:.*|root:x:0:0:root:/root:/bin/bash|g' "/etc/passwd" ; \
   update-alternatives --install /bin/sh sh /bin/bash 1
 
