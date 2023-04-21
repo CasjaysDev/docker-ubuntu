@@ -1,12 +1,12 @@
 ## 👋 Welcome to ubuntu 🚀  
 
-ubuntu README  
 Custom image with bash and tini installed  
+  
   
 ## Run container
 
 ```shell
-docker run casjaysdev/ubuntu bash
+docker run --name -casjaysdev-ubuntu casjaysdev/ubuntu bash
 ```
   
   
@@ -20,24 +20,23 @@ docker run casjaysdev/ubuntu bash
 ## Get source files  
 
 ```shell
-dockermgr download src ubuntu
+dockermgr download src casjaysdev/docker-ubuntu
 ```
 
 OR
 
 ```shell
-git clone "https://github.com/casjaysdevdocker/ubuntu" "$HOME/Projects/github/casjaysdevdocker/ubuntu"
+git clone "https://github.com/casjaysdev/docker-ubuntu" "$HOME/Projects/github/casjaysdev/docker-ubuntu"
 ```
 
 ## Build container  
 
 ```shell
-cd "$HOME/Projects/github/casjaysdevdocker/ubuntu"
+cd "$HOME/Projects/github/casjaysdev/docker-ubuntu"
 buildx 
 ```
 
 ## Authors  
 
-📽 dockermgr: [Github](https://github.com/dockermgr) [Docker](https://hub.docker.com/r/casjaysdevdocker) 📽  
-🤖 casjay: [Github](https://github.com/casjay) [Docker](https://hub.docker.com/r/casjay) 🤖  
-⛵ CasjaysDevDocker: [Github](https://github.com/casjaysdevdocker) [Docker](https://hub.docker.com/r/casjaysdevdocker) ⛵  
+🤖 casjay: [Github](https://github.com/casjay) 🤖  
+⛵ casjaysdev: [Github](https://github.com/casjaysdev) [Docker](https://hub.docker.com/r/casjaysdev) ⛵  
